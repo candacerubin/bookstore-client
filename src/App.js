@@ -1,25 +1,31 @@
-import logo from './logo.svg';
+import React from 'react';
+
 import './App.css';
+import axios from 'axios';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [books, setBooks] = React.useState([]);
+
+	React.useEffect(() => {
+		axios
+			.get('http://localhost:3000/products/books')
+			.then(({ data }) => {
+				if (data) {
+					setBooks(data.books);
+					console.log(data.books);
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}, []);
+	return (
+		<div className='App'>
+			{books.map((book, i) => (
+				<h1 key={i}>{book.title}</h1>
+			))}
+		</div>
+	);
 }
 
 export default App;
