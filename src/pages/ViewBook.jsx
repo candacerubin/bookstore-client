@@ -15,6 +15,7 @@ export default function ViewBook(props) {
 			})
 			.catch((error) => console.log(error));
 	}, [props.match.params.bookId]);
+	console.log(book);
 	return book ? (
 		<div>
 			<h1>{book.title}</h1>
